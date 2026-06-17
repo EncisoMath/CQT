@@ -1,0 +1,117 @@
+<!doctype html>
+<html lang="es">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=1" />
+  <meta name="theme-color" content="#ebb513" />
+  <title>Mini Quiz ABCD por QR</title>
+  <link rel="manifest" href="./manifest.webmanifest" />
+  <link rel="icon" href="./icons/icon.svg" type="image/svg+xml" />
+  <link rel="stylesheet" href="./css/styles.css" />
+</head>
+<body>
+  <main class="app-shell">
+    <section id="scannerCard" class="card scanner-card">
+      <header class="hero">
+        <div class="hero-grid"></div>
+        <div class="hero-content">
+          <p class="eyebrow">EncisoMath · prototipo offline</p>
+          <h1>Quiz por QR</h1>
+          <p class="hero-copy">Lee todos los QR requeridos y arma un quiz ABCD sin depender de una base de datos.</p>
+        </div>
+      </header>
+
+      <div class="content">
+        <div class="notice">
+          <strong>Para cámara real:</strong> súbelo a GitHub Pages o ejecútalo en <code>localhost</code>.
+          Si lo abres desde una vista previa embebida, Chrome puede negar la cámara aunque tenga permisos.
+        </div>
+
+        <div class="video-wrap">
+          <video id="video" playsinline autoplay muted></video>
+          <div id="html5qrReader" class="html5-reader hidden"></div>
+          <div id="scanOverlay" class="scan-overlay">
+            <span></span>
+          </div>
+        </div>
+
+        <div class="button-row">
+          <button id="startBtn">Escanear QR</button>
+          <button id="altReaderBtn" class="blue">Lector alternativo online</button>
+          <button id="permissionBtn" class="secondary">Probar permiso</button>
+          <button id="stopBtn" class="secondary">Detener cámara</button>
+          <button id="resetBtn" class="danger">Borrar partes</button>
+        </div>
+
+        <div class="button-row">
+          <select id="cameraSelect" title="Cámara">
+            <option value="">Cámara automática / trasera</option>
+          </select>
+          <button id="refreshCamerasBtn" class="secondary">Actualizar cámaras</button>
+        </div>
+
+        <div id="status" class="status">
+          Estado: listo. Formato esperado: <code>EMQZ|v1|id=...|part=1/2|data=...</code>
+        </div>
+
+        <details class="diagnostic-box">
+          <summary>Diagnóstico técnico</summary>
+          <pre id="diagnostic"></pre>
+        </details>
+
+        <section class="parts-panel">
+          <h2>Partes leídas</h2>
+          <div id="partsBox" class="parts"></div>
+        </section>
+
+        <section class="manual-panel">
+          <h2>Prueba manual</h2>
+          <p>
+            Pega aquí el texto de un QR. Sirve para probar el armado del quiz aunque la cámara esté bloqueada.
+          </p>
+          <textarea id="manualInput" placeholder="Pega aquí el texto de un QR..."></textarea>
+          <div class="button-row">
+            <button id="manualBtn" class="blue">Procesar texto pegado</button>
+            <button id="demo1Btn" class="secondary">Pegar demo QR 1</button>
+            <button id="demo2Btn" class="secondary">Pegar demo QR 2</button>
+          </div>
+        </section>
+      </div>
+    </section>
+
+    <section id="quizCard" class="card quiz-card hidden">
+      <header class="hero quiz-hero">
+        <div class="hero-grid"></div>
+        <div class="hero-content">
+          <p id="quizDesc" class="eyebrow">ABCD</p>
+          <h1 id="quizTitle">Quiz</h1>
+        </div>
+      </header>
+
+      <div class="content">
+        <div class="quiz-top">
+          <div class="progress-pill" id="progress">Ítem 1/1</div>
+          <div class="timer" id="timer">30</div>
+        </div>
+
+        <div class="question-card">
+          <h2 id="questionText"></h2>
+          <div class="meta" id="questionMeta"></div>
+        </div>
+
+        <div id="options" class="options"></div>
+        <div id="feedback" class="feedback hidden"></div>
+
+        <div class="button-row">
+          <button id="nextBtn" class="ok hidden">Siguiente</button>
+          <button id="againBtn" class="secondary hidden">Volver a escanear</button>
+        </div>
+
+        <div id="finishBox" class="finish hidden"></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="./js/app.js" defer></script>
+</body>
+</html>
